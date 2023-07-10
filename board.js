@@ -1,9 +1,9 @@
 class Node {
-  constructor(x,y,dist) {
+  constructor(x,y,dist, parent = null) {
     this.x = x,
     this.y = y,
     this.dist = dist,
-    this.parent = null
+    this.parent = parent
   }
 
 }
@@ -19,7 +19,7 @@ class Node {
     [-2, -1]
   ]
 
-function onBoard(x,y, n = 8) {
+function onBoard(x, y, n = 8) {
   if (x >= 0 && x < n && y >= 0 && y < n) return true;
   return false;
 }
@@ -36,15 +36,21 @@ function knightMoves(initial, target) {
 
   let current;
   let x, y;
-  let path = [initial];
+  let path = [target];
+  let previous;
 
   while (queue.length) {
     current = queue.shift();
 
 
     if (current.x === target[0] && current.y === target[1]) {
-      let uniquePath = [...new Set(path)];
-      console.log(uniquePath);
+        previous = current.parent;
+      for (let i = 0; i < current.dist; i++) {
+        path.unshift([previous.x, previous.y]);
+        previous = previous.parent;
+      }
+      
+      console.log(path);
       return current.dist;
     }
 
@@ -55,7 +61,7 @@ function knightMoves(initial, target) {
       if (onBoard(x,y) && visit[x][y] === 0) {
         visit[x][y] === 1;
         let child = new Node(x,y,current.dist + 1);
-        child.parent = [current.x, current.y];
+        child.parent = current;
         queue.push(child);
       } 
     }
@@ -63,7 +69,7 @@ function knightMoves(initial, target) {
 
 }
 
-console.log(knightMoves([0,0], [3,3]));
+console.log(knightMoves([3,3], [0,0]));
 
 
 
