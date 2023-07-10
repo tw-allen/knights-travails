@@ -2,8 +2,10 @@ class Node {
   constructor(x,y,dist) {
     this.x = x,
     this.y = y,
-    this.dist = dist
+    this.dist = dist,
+    this.parent = null
   }
+
 }
 
   const possibleMoves = [
@@ -26,18 +28,23 @@ function knightMoves(initial, target) {
   let queue = [];
 
   // enqueue the initial node
-  queue.push(new Node(initial[0], initial[1], 0));
+  let initialNode = new Node(initial[0], initial[1], 0);
+  queue.push(initialNode);
 
   let visit = [...Array(8)].map(() => Array(8).fill(0));
   visit[initial[0]][initial[1]] = 1;
 
   let current;
   let x, y;
+  let path = [initial];
 
   while (queue.length) {
     current = queue.shift();
 
+
     if (current.x === target[0] && current.y === target[1]) {
+      let uniquePath = [...new Set(path)];
+      console.log(uniquePath);
       return current.dist;
     }
 
@@ -47,13 +54,16 @@ function knightMoves(initial, target) {
 
       if (onBoard(x,y) && visit[x][y] === 0) {
         visit[x][y] === 1;
-        queue.push(new Node(x,y,current.dist + 1));
+        let child = new Node(x,y,current.dist + 1);
+        child.parent = [current.x, current.y];
+        queue.push(child);
       } 
     }
   }
+
 }
 
-console.log(knightMoves([3,3], [0,0]));
+console.log(knightMoves([0,0], [3,3]));
 
 
 
