@@ -18,7 +18,7 @@ class Node {
   ]
 
 function onBoard(x,y, n = 8) {
-  if (x >= 1 && x <= n && y >=1 && y <= n) return true;
+  if (x >= 0 && x < n && y >= 0 && y < n) return true;
   return false;
 }
 
@@ -43,7 +43,6 @@ function knightMoves(initial, target) {
 
     for (let i = 0; i < 8; i++) {
       x = current.x + possibleMoves[i][0];
-      console.log(x);
       y = current.y + possibleMoves[i][1];
 
       if (onBoard(x,y) && visit[x][y] === 0) {
@@ -54,37 +53,7 @@ function knightMoves(initial, target) {
   }
 }
 
-console.log(knightMoves([0,0], [0,0]));
-
-// const chessBoard = (x = 0, y = 0) => {
-
-//   let xPosition = x;
-//   let yPosition = y;
-//   const size = 8;
-//   let dist = 0;
-
-
-
-//   const possibleMoves = [
-//     [x + 1, y + 2],
-//     [x + 1, y - 2],
-//     [x - 1, y + 2],
-//     [x - 1, y - 2],
-//     [x + 2, y + 1],
-//     [x + 2, y - 1],
-//     [x - 2, y + 1],
-//     [x - 2, y - 1]
-//   ]
-
-//   function createBoard() {
-//     data.board = [];
-//     for (i = 1; i <= 8; i++) {
-//       data.board.push(x);
-//     }
-//     data.board.map((x) => Array(8).fill(""));
-//   }
-
-// }
+console.log(knightMoves([3,3], [0,0]));
 
 
 
